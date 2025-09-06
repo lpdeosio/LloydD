@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lloyd – Remote Professional</title>
+  <meta name="description" content="Lloyd De Osio - Remote professional specializing in US healthcare support, executive assistance, and compliance operations." />
+  <link rel="icon" href="favicon.ico" />
+  <style>
+    , ::before, ::after { box-sizing: border-box; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 2rem 1rem;
+      background-color: #f4f4f4;
+      color: #222;
+      line-height: 1.6;
+    }
+    a { color: #0077b6; text-decoration: none; }
+    a:hover, a:focus { color: #023e8a; text-decoration: underline; }
+    .container {
+      max-width: 800px; margin: 0 auto;
+      background: #fff; padding: 2rem 2.5rem;
+      border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    nav { background: #005f73; padding: 1rem; border-radius: 8px; margin-bottom: 2rem; }
+    nav ul {
+      display: flex; gap: 1.5rem; list-style: none;
+      margin: 0; padding: 0; color: white;
+    }
+    nav a { color: white; font-weight: bold; }
+    section { display: none; }
+    section.active { display: block; }
+    h1 { font-size: 2.25rem; margin-bottom: 0.5rem; color: #001219; }
+    h2 { font-size: 1.75rem; margin-top: 2rem; color: #005f73; }
+    h3 { font-size: 1.25rem; color: #0077b6; }
+  </style>
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="#profile" data-tab="profile">Profile</a></li>
+      <li><a href="#blog" data-tab="blog">Blog</a></li>
+      <li><a href="#reviews" data-tab="reviews">Recommendations</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <header>
+      <h1>🌍 Lloyd De Osio</h1>
+      <p><strong>Remote Professional | US Healthcare Expert</strong></p>
+      <p>Quezon City, Philippines | Available for international remote roles</p>
+      <p>
+        📧 <a href="mailto:lpdeosio@gmail.com">lpdeosio@gmail.com</a> |
+        🔗 <a href="https://www.linkedin.com/in/LloydDeOsio" target="_blank">LinkedIn</a>
+      </p>
+    </header>
+
+    <main>
+      <!-- PROFILE -->
+      <section id="profile" class="active">
+        <h2>🧭 Professional Summary</h2>
+        <p>Detail-oriented remote support professional with a strong foundation in US healthcare, administrative assistance, and compliance operations.</p>
+
+        <h2>💼 Core Skills</h2>
+        <ul>
+          <li>Executive Support: Inbox management, calendar coordination, travel planning</li>
+          <li>Lead Generation & Compliance: Research, documentation, confidentiality protocols</li>
+          <li>Tech Fluency: Microsoft Office, Google Suite, Salesforce, HubSpot, Quickbase</li>
+          <li>Process Optimization: MS Teams automation, Six Sigma Yellow Belt certified</li>
+          <li>Communication: Clear, professional, and culturally adaptive</li>
+        </ul>
+
+        <h2>🏆 Career Highlights</h2>
+        <p><strong>Concentrix (Remote – US Healthcare Account)</strong><br>
+        <em>Healthcare Advisor → Subject Matter Expert</em></p>
+        <ul>
+          <li>Rapid promotion due to performance and leadership</li>
+          <li>2024 Q3 Rockstar Award recipient</li>
+          <li>Managed sensitive healthcare operations with compliance precision</li>
+          <li>Led peer coaching and process improvement initiatives</li>
+        </ul>
+
+        <h2>📚 Certifications & Training</h2>
+        <ul>
+          <li>Six Sigma Yellow Belt – Workflow Optimization</li>
+          <li>Data Privacy & Compliance (Internal Training)</li>
+          <li>Ongoing: Legal Assistant coursework</li>
+        </ul>
+
+        <h2>🌱 Volunteer & Projects</h2>
+        <ul>
+          <li>Aid to elderly</li>
+          <li>Planted 10 Narra Trees</li>
+        </ul>
+
+        <h2>🎯 Career Goals</h2>
+        <ul>
+          <li><strong>Short-Term:</strong> Secure a remote Executive or Legal Assistant role</li>
+          <li><strong>Long-Term:</strong> Build a career rooted in trust and excellence</li>
+        </ul>
+      </section>
+
+      <!-- BLOG -->
+      <section id="blog">
+        <h2>📝 Blog</h2>
+        <div id="blog-content">Loading blog posts...</div>
+      </section>
+
+      <!-- REVIEWS -->
+      <section id="reviews">
+        <h2>⭐ Visitor Reviews</h2>
+        <div id="reviews-content">Loading visitor reviews...</div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Tab switching
+    const tabs = document.querySelectorAll("nav a");
+    const sections = document.querySelectorAll("main section");
+    tabs.forEach(tab => {
+      tab.addEventListener("click", e => {
+        e.preventDefault();
+        const id = tab.dataset.tab;
+        sections.forEach(s => s.classList.remove("active"));
+        document.getElementById(id).classList.add("active");
+      });
+    });
+
+    // Load Google Drive content
+    async function loadDriveContent(containerId) {
+      const fileId = "1T1Gpg7gQGGZqmH7vaBAW2Gxol-9v5qek";
+      const url = `https://drive.google.com/uc?export=download&id=${fileId}`;
+      try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error("Failed to fetch file");
+        const text = await res.text();
+        document.getElementById(containerId).textContent = text;
+      } catch {
+        document.getElementById(containerId).innerHTML =
+          `<iframe src="https://drive.google.com/file/d/${fileId}/preview" width="100%" height="400"></iframe>`;
+      }
+    }
+
+    loadDriveContent("blog-content");
+    loadDriveContent("reviews-content");
+  </script>
+</body>
+</html>
