@@ -42,7 +42,7 @@
     <ul>
       <li><a href="#profile" data-tab="profile">Profile</a></li>
       <li><a href="#blog" data-tab="blog">Blog</a></li>
-      <li><a href="#reviews" data-tab="reviews">Recommendations</a></li>
+      <li><a href="#recommendations" data-tab="recommendations">Recommendations</a></li>
     </ul>
   </nav>
 
@@ -104,27 +104,22 @@
 
         <!-- BLOG -->
       <section id="blog">
-        <h2>📝 Blog</h2>
-        <div class="blog-post">
+  <h2>📝 Blog</h2>
+  <!-- This div will hold the content from Google Drive -->
+  <div id="blog-content"></div>
   <div class="review-section">
     <h3>Leave a Review or Reaction</h3>
-
     <form id="comment-form">
       <label for="comment-text">Your Comment:</label>
       <textarea id="comment-text" name="comment-text" required=""></textarea>
-      
       <label for="reviewer-name">Your Name:</label>
       <input type="text" id="reviewer-name" name="reviewer-name" required="">
-
       <button type="submit">Submit</button>
     </form>
-    
     <div id="comments-container">
-      </div>
-
+    </div>
   </div>
-</div>
-      </section>
+</section>
 
       <!-- RECOMMENDATIONS -->
       <section id="recommendations">
@@ -153,20 +148,20 @@
       });
     });
 
-    // Load Google Drive content
-    async function loadDriveContent(containerId) {
-      const fileId = "1T1Gpg7gQGGZqmH7vaBAW2Gxol-9v5qek";
-      const url = `https://drive.google.com/uc?export=download&id=${fileId}`;
-      try {
-        const res = await fetch(url);
-        if (!res.ok) throw new Error("Failed to fetch file");
-        const text = await res.text();
-        document.getElementById(containerId).textContent = text;
-      } catch {
-        document.getElementById(containerId).innerHTML =
-          `<iframe src="https://drive.google.com/file/d/${fileId}/preview" width="100%" height="400"></iframe>`;
-      }
-    }
+    // Load Google Drive content - SIMPLIFIED VERSION
+async function loadDriveContent(containerId) {
+  const fileId = "1T1Gpg7gQGGZqmH7vaBAW2Gxol-9v5qek";
+  const container = document.getElementById(containerId);
+  
+  // Always use the iframe method. It's more reliable.
+  container.innerHTML = 
+    `<iframe src="https://drive.google.com/file/d/${fileId}/preview" 
+            width="100%" 
+            height="500" 
+            frameborder="0" 
+            allow="autoplay">
+    </iframe>`;
+}
 
     loadDriveContent("blog-content");
   </script>
