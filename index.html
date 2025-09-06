@@ -124,7 +124,7 @@
       <!-- RECOMMENDATIONS -->
       <section id="recommendations">
         <h2>⭐ Visitor Recommendations</h2>
-        <form action="mailto:lpdeosio@gmail.com" method="post" enctype="text/plain">
+        <form id="recommendation-form">
   <label for="name">Your Name:</label><br>
   <input type="text" id="name" name="name"><br>
   <label for="message">Recommendation:</label><br>
@@ -136,34 +136,185 @@
   </div>
 
   <script>
-    // Tab switching
+    // --- CONFIGURATION ---
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw9hKdUwCPxXhY50eYnFPEClIhS5Sc3v-oz3PqvhGCZXFqQTdJBABHcSFg-O6OPvbmx/exec'; // e.g., https://script.google.com/macros/s/.../exec
+
+    // --- TAB SWITCHING ---
     const tabs = document.querySelectorAll("nav a");
     const sections = document.querySelectorAll("main section");
     tabs.forEach(tab => {
-      tab.addEventListener("click", e => {
+        tab.addEventListener("click", e => {
         e.preventDefault();
         const id = tab.dataset.tab;
         sections.forEach(s => s.classList.remove("active"));
         document.getElementById(id).classList.add("active");
-      });
+
+        // When switching to the Blog tab, load the content
+        if (id === 'blog') {
+            loadBlogPosts();
+            loadComments(); // Also load existing comments
+        }
+        if (id === 'recommendations') {
+            // You could load existing recommendations here too
+        }
+        });
     });
 
-    // Load Google Drive content - SIMPLIFIED VERSION
-async function loadDriveContent(containerId) {
-  const fileId = "1T1Gpg7gQGGZqmH7vaBAW2Gxol-9v5qek";
-  const container = document.getElementById(containerId);
-  
-  // Always use the iframe method. It's more reliable.
-  container.innerHTML = 
-    `<iframe src="https://drive.google.com/file/d/${fileId}/preview" 
-            width="100%" 
-            height="500" 
-            frameborder="0" 
-            allow="autoplay">
-    </iframe>`;
-}
+    // --- BLOG FUNCTIONALITY ---
+    async function loadBlogPosts() {
+        const container = document.getElementById('blog-content');
+        container.innerHTML = '<p>Loading blog posts...</p>';
 
-    loadDriveContent("blog-content");
-  </script>
+        try {
+            const response = await fetch(`${SCRIPT_URL}?action=getBlogPosts`);
+            const data = await response.json();
+
+            if (data.error) throw new Error(data.error);
+            if (data.posts.length === 0) {
+                container.innerHTML = '<p>No blog posts yet. Check back soon!</p>';
+                return;
+            }
+
+            let html = '';
+            data.posts.forEach(post => {
+                html += `
+                <article style="margin-bottom: 3rem; border-bottom: 1px solid #eee; padding-bottom: 1.5rem;">
+                    <h3>${post.title}</h3>
+                    <p><small>Posted on: ${new Date(post.timestamp).toLocaleDateString()}</small></p>
+                    <div>${post.content.replace(/\n/g, '<br>')}</div>
+                </article>
+                `;
+            });
+            container.innerHTML = html;
+        } catch (error) {
+            console.error("Error loading blog:", error);
+            container.innerHTML = `<p>Could not load blog posts. Error: ${error.message}</p>`;
+        }
+    }
+
+    // --- COMMENT FUNCTIONALITY ---
+    // Load existing comments
+    async function loadComments() {
+        const container = document.getElementById('comments-container');
+        container.innerHTML = '<p>Loading comments...</p>';
+
+        try {
+            const response = await fetch(`${SCRIPT_URL}?action=getComments`);
+            const data = await response.json();
+
+            if (data.error) throw new Error(data.error);
+
+            if (data.data.length === 0) {
+                container.innerHTML = '<p>No comments yet. Be the first to leave one!</p>';
+                return;
+            }
+
+            let html = '<h4>What others are saying:</h4>';
+            data.data.forEach(comment => {
+                html += `
+                <div style="background: #f9f9f9; padding: 1rem; margin: 1rem 0; border-radius: 5px;">
+                    <strong>${comment.name}</strong> <small>(${new Date(comment.timestamp).toLocaleDateString()})</small>
+                    <p>${comment.message}</p>
+                </div>
+                `;
+            });
+            container.innerHTML = html;
+        } catch (error) {
+            console.error("Error loading comments:", error);
+            container.innerHTML = `<p>Could not load comments.</p>`;
+        }
+    }
+
+    // Handle new comment form submission
+    document.getElementById('comment-form').addEventListener('submit', async function(e) {
+        e.preventDefault(); // Stop the form from reloading the page
+
+        const formData = new FormData(this);
+        const submitButton = this.querySelector('button[type="submit"]');
+        const originalButtonText = submitButton.textContent;
+
+        // Create a payload object
+        const payload = {
+            action: 'addComment',
+            name: formData.get('reviewer-name'),
+            message: formData.get('comment-text')
+        };
+
+        // Visual feedback
+        submitButton.textContent = 'Posting...';
+        submitButton.disabled = true;
+
+        try {
+            const response = await fetch(SCRIPT_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            const result = await response.json();
+
+            if (result.error) throw new Error(result.error);
+
+            // Success!
+            alert(result.message); // Or display a nicer message on the page
+            this.reset(); // Clear the form
+            loadComments(); // Reload the comments to show the new one
+        } catch (error) {
+            console.error("Error submitting comment:", error);
+            alert("Sorry, there was an error posting your comment: " + error.message);
+        } finally {
+            // Reset the button state
+            submitButton.textContent = originalButtonText;
+            submitButton.disabled = false;
+        }
+    });
+
+    // --- RECOMMENDATIONS FUNCTIONALITY ---
+    // Replace the mailto form with this JS-driven form
+    // First, change the recommendations form in your HTML to have an ID:
+    // <form id="recommendation-form">
+    document.getElementById('recommendation-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+        const submitButton = this.querySelector('input[type="submit"]');
+        const originalButtonText = submitButton.value;
+
+        const payload = {
+            action: 'addRecommendation',
+            name: formData.get('name'),
+            message: formData.get('message')
+        };
+
+        submitButton.value = 'Sending...';
+        submitButton.disabled = true;
+
+        try {
+            const response = await fetch(SCRIPT_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            const result = await response.json();
+
+            if (result.error) throw new Error(result.error);
+
+            alert(result.message);
+            this.reset();
+        } catch (error) {
+            console.error("Error submitting recommendation:", error);
+            alert("Error: " + error.message);
+        } finally {
+            submitButton.value = originalButtonText;
+            submitButton.disabled = false;
+        }
+    });
+
+    // --- INITIAL LOAD ---
+    // Load blog posts if the blog tab is active on page load
+    if (document.getElementById('blog').classList.contains('active')) {
+        loadBlogPosts();
+        loadComments();
+    }
+</script>
 </body>
 </html>
