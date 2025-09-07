@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Lloyd – Remote Professional</title>
-  <meta name="description" content="Lloyd De Osio - Remote professional specializing in US healthcare support, executive assistance, and compliance operations." />
+  <title>lloyd – remote professional</title>
+  <meta name="description" content="lloyd de osio - remote professional specializing in us healthcare support, executive assistance, and compliance operations." />
   <link rel="icon" href="favicon.ico" />
   <style>
     *, *::before, *::after { box-sizing: border-box; }
     body {
-      font-family: Arial, sans-serif;
+      font-family: arial, sans-serif;
       margin: 0;
       padding: 2rem 1rem;
       background-color: #f4f4f4;
@@ -36,7 +36,17 @@
     h2 { font-size: 1.75rem; margin-top: 2rem; color: #005f73; }
     h3 { font-size: 1.25rem; color: #0077b6; }
     
-    /* Debug styles */
+    /* NEW: Banner Styles */
+    .profile-banner {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      object-fit: cover;
+      max-height: 250px; 
+    }
+
+    /* debug styles */
     .debug-info {
       background: #fff3cd;
       border: 1px solid #ffeaa7;
@@ -109,152 +119,140 @@
     #comment-form button:hover, #recommendation-form input[type="submit"]:hover {
       background: #023e8a;
     }
-
-.profile-banner {
-      width: 100%; /* Make the image fill the width of its container */
-      height: auto; /* Maintain aspect ratio */
-      border-radius: 8px; /* Match the container's border-radius, or adjust as needed */
-      margin-bottom: 2rem; /* Add some space below the banner */
-      object-fit: cover; /* Ensures the image covers the area without distortion, might crop */
-      max-height: 250px; /* Example: set a max height for the banner */
-    }
   </style>
 </head>
 <body>
   <nav>
     <ul>
-      <li><a href="#profile" data-tab="profile">Profile</a></li>
-      <li><a href="#blog" data-tab="blog">Blog</a></li>
-      <li><a href="#recommendations" data-tab="recommendations">Recommendations</a></li>
+      <li><a href="#profile" data-tab="profile">profile</a></li>
+      <li><a href="#blog" data-tab="blog">blog</a></li>
+      <li><a href="#recommendations" data-tab="recommendations">recommendations</a></li>
     </ul>
   </nav>
 
   <div class="container">
     <header>
- <section id="profile" class="active">
-        <img src="banner.jpg" alt="Profile Banner" class="profile-banner">
-      <h1>🌍 Lloyd De Osio</h1>
-      <p><strong>Remote Professional | US Healthcare Expert</strong></p>
-      <p>Quezon City, Philippines | Available for international remote roles</p>
+      <h1>🌍 lloyd de osio</h1>
+      <p><strong>remote professional | us healthcare expert</strong></p>
+      <p>quezon city, philippines | available for international remote roles</p>
       <p>
-        📧 <a href="mailto:lpdeosio@gmail.com">lpdeosio@gmail.com</a> |
-        🔗 <a href="https://www.linkedin.com/in/LloydDeOsio" target="_blank">LinkedIn</a>
+        📧 <a href="mailto:lpdeosiogmail.com">lpdeosiogmail.com</a> |
+        🔗 <a href="https://www.linkedin.com/in/lloyddeosio" target="_blank">linkedin</a>
       </p>
     </header>
 
-    <button class="debug-toggle" onclick="toggleDebug()">Show Debug Info</button>
+    <button class="debug-toggle" onclick="toggledebug()">show debug info</button>
     
     <div id="debug-section" class="debug-info" style="display: none;">
-      <h3>Connection Debugger</h3>
-      <p>This section helps diagnose connection issues with your Google Apps Script.</p>
+      <h3>connection debugger</h3>
+      <p>this section helps diagnose connection issues with your google apps script.</p>
       
       <div class="test-buttons">
-        <button class="test-button" onclick="testConnection('getBlogPosts')">Test Blog Posts</button>
-        <button class="test-button" onclick="testConnection('getComments')">Test Comments</button>
-        <button class="test-button" onclick="testConnection('addComment')">Test Add Comment</button>
+        <button class="test-button" onclick="testconnection('getblogposts')">test blog posts</button>
+        <button class="test-button" onclick="testconnection('getcomments')">test comments</button>
+        <button class="test-button" onclick="testconnection('addcomment')">test add comment</button>
       </div>
       
       <div id="test-result">
-        <p>Test results will appear here.</p>
+        <p>test results will appear here.</p>
       </div>
       
-      <h4>Common Solutions:</h4>
+      <h4>common solutions:</h4>
       <ol>
-        <li>Ensure your Google Apps Script is deployed as <strong>Web App</strong> with access for <strong>"Anyone"</strong></li>
-        <li>Verify your Google Sheets are shared with <strong>"Anyone with the link"</strong> as <strong>"Viewer"</strong></li>
-        <li>Check that the Sheet names in your script match exactly (case-sensitive)</li>
-        <li>Make sure you've replaced the placeholder Sheet IDs in the script</li>
+        <li>ensure your google apps script is deployed as <strong>web app</strong> with access for <strong>"anyone"</strong></li>
+        <li>verify your google sheets are shared with <strong>"anyone with the link"</strong> as <strong>"viewer"</strong></li>
+        <li>check that the sheet names in your script match exactly (case-sensitive)</li>
+        <li>make sure you've replaced the placeholder sheet ids in the script</li>
       </ol>
     </div>
 
     <main>
-      <!-- PROFILE -->
       <section id="profile" class="active">
-        <h2>🧭 Professional Summary</h2>
-        <p>Detail-oriented remote support professional with a strong foundation in US healthcare, administrative assistance, and compliance operations.</p>
+        <img src="https://via.placeholder.com/800x250/005f73/ffffff?text=Professional+Profile+Banner" alt="Profile Banner" class="profile-banner">
 
-        <h2>💼 Core Skills</h2>
+        <h2>🧭 professional summary</h2>
+        <p>detail-oriented remote support professional with a strong foundation in us healthcare, administrative assistance, and compliance operations.</p>
+
+        <h2>💼 core skills</h2>
         <ul>
-          <li>Executive Support: Inbox management, calendar coordination, travel planning</li>
-          <li>Lead Generation & Compliance: Research, documentation, confidentiality protocols</li>
-          <li>Tech Fluency: Microsoft Office, Google Suite, Salesforce, HubSpot, Quickbase</li>
-          <li>Process Optimization: MS Teams automation, Six Sigma Yellow Belt certified</li>
-          <li>Communication: Clear, professional, and culturally adaptive</li>
+          <li>executive support: inbox management, calendar coordination, travel planning</li>
+          <li>lead generation & compliance: research, documentation, confidentiality protocols</li>
+          <li>tech fluency: microsoft office, google suite, salesforce, hubspot, quickbase</li>
+          <li>process optimization: ms teams automation, six sigma yellow belt certified</li>
+          <li>communication: clear, professional, and culturally adaptive</li>
         </ul>
 
-        <h2>🏆 Career Highlights</h2>
-        <p><strong>Concentrix (Remote – US Healthcare Account)</strong><br>
-        <em>Healthcare Advisor → Subject Matter Expert</em></p>
+        <h2>🏆 career highlights</h2>
+        <p><strong>concentrix (remote – us healthcare account)</strong><br>
+        <em>healthcare advisor → subject matter expert</em></p>
         <ul>
-          <li>Rapid promotion due to performance and leadership</li>
-          <li>2024 Q3 Rockstar Award recipient</li>
-          <li>Managed sensitive healthcare operations with compliance precision</li>
-          <li>Led peer coaching and process improvement initiatives</li>
+          <li>rapid promotion due to performance and leadership</li>
+          <li>2024 q3 rockstar award recipient</li>
+          <li>managed sensitive healthcare operations with compliance precision</li>
+          <li>led peer coaching and process improvement initiatives</li>
         </ul>
 
-        <h2>📚 Certifications & Training</h2>
+        <h2>📚 certifications & training</h2>
         <ul>
-          <li>Six Sigma Yellow Belt – Workflow Optimization</li>
-          <li>Data Privacy & Compliance (Internal Training)</li>
+          <li>six sigma yellow belt – workflow optimization</li>
+          <li>data privacy & compliance (internal training)</li>
         </ul>
 
-        <h2>🌱 Volunteer & Projects</h2>
+        <h2>🌱 volunteer & projects</h2>
         <ul>
-          <li>Aid to elderly</li>
-          <li>Planted 10 Narra Trees</li>
+          <li>aid to elderly</li>
+          <li>planted 10 narra trees</li>
         </ul>
 
-        <h2>🎯 Career Goals</h2>
+        <h2>🎯 career goals</h2>
         <ul>
-          <li><strong>Short-Term:</strong> Learn new skills</li>
-          <li><strong>Long-Term:</strong> Build a career rooted in trust and excellence</li>
+          <li><strong>short-term:</strong> learn new skills</li>
+          <li><strong>long-term:</strong> build a career rooted in trust and excellence</li>
         </ul>
       </section>
 
-      <!-- BLOG -->
       <section id="blog">
-        <h2>📝 Blog</h2>
+        <h2>📝 blog</h2>
         <div id="blog-content">
-          <p>Loading blog posts... If this takes too long, there may be a connection issue.</p>
-          <p>Click the "Show Debug Info" button above to troubleshoot.</p>
+          <p>loading blog posts... if this takes too long, there may be a connection issue.</p>
+          <p>click the "show debug info" button above to troubleshoot.</p>
         </div>
         <div class="review-section">
-  <h3>Leave a Review or Reaction</h3>
-  <form id="comment-form">
-    <label for="reviewer-name">Your Name:</label>
-    <input type="text" id="reviewer-name" name="reviewer-name" required="">
-    <label for="comment-text">Your Comment:</label>
-    <textarea id="comment-text" name="comment-text" required=""></textarea>
-    <button type="submit">Submit</button>
-  </form>
-  <div id="comments-container">
-    <p>Comments will load here. If you don't see any, there may be a connection issue.</p>
-  </div>
-</div>
+          <h3>leave a review or reaction</h3>
+          <form id="comment-form">
+            <label for="reviewer-name">your name:</label>
+            <input type="text" id="reviewer-name" name="reviewer-name" required="">
+            <label for="comment-text">your comment:</label>
+            <textarea id="comment-text" name="comment-text" required=""></textarea>
+            <button type="submit">submit</button>
+          </form>
+          <div id="comments-container">
+            <p>comments will load here. if you don't see any, there may be a connection issue.</p>
+          </div>
+        </div>
       </section>
 
-      <!-- RECOMMENDATIONS -->
       <section id="recommendations">
-        <h2>⭐ Visitor Recommendations</h2>
+        <h2>⭐ visitor recommendations</h2>
         <form id="recommendation-form">
-          <label for="name">Your Name:</label><br>
+          <label for="name">your name:</label><br>
           <input type="text" id="name" name="name" required><br>
-          <label for="message">Recommendation:</label><br>
+          <label for="message">recommendation:</label><br>
           <textarea id="message" name="message" required></textarea><br>
-          <input type="submit" value="Send">
+          <input type="submit" value="send">
         </form>
         <div id="recommendations-container">
-          <p>Recommendations are submitted via the form above.</p>
+          <p>recommendations are submitted via the form above.</p>
         </div>
       </section>
     </main>
   </div>
 
   <script>
-    // --- CONFIGURATION ---
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw9hKdUwCPxXhY50eYnFPEClIhS5Sc3v-oz3PqvhGCZXFqQTdJBABHcSFg-O6OPvbmx/exec';
+    // --- configuration ---
+    const script_url = 'https://script.google.com/macros/s/akfycbw9hkduwcpxxhy50eynfpeclihs5sc3v-oz3pqvhgczxfqqtdjbabhcsfg-o6opvbmx/exec';
 
-    // --- TAB SWITCHING ---
+    // --- tab switching ---
     function showTabFromHash() {
       const defaultTab = 'profile';
       // Make the hash lowercase for case-insensitive matching
@@ -297,7 +295,7 @@
     // Event listener for when the URL hash changes
     window.addEventListener('hashchange', showTabFromHash);
     
-    // --- DEBUG FUNCTIONS ---
+    // --- debug functions ---
     function toggleDebug() {
       const debugSection = document.getElementById('debug-section');
       const debugToggle = document.querySelector('.debug-toggle');
@@ -318,20 +316,20 @@
       try {
         let response, data;
         
-        if (action === 'addComment') {
+        if (action === 'addcomment') {
           const payload = {
             action: 'addComment',
             name: 'Test User',
             message: 'This is a test comment from the debugger.'
           };
           
-          response = await fetch(SCRIPT_URL, {
+          response = await fetch(script_url, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
           });
         } else {
-          response = await fetch(`${SCRIPT_URL}?action=${action}`);
+          response = await fetch(`${script_url}?action=${action}`);
         }
         
         const responseText = await response.text();
@@ -342,7 +340,7 @@
           testResult.innerHTML = `
             <div class="response-container">
               <p><strong>Error parsing JSON response:</strong> ${e.message}</p>
-              <p><strong>Raw response:</strong> ${responseText}</p>
+              <p><strong>Raw Response:</strong> ${responseText}</p>
             </div>
             <p>This usually means your Google Apps Script is not returning valid JSON.
             Check your script for errors.</p>
@@ -354,9 +352,9 @@
           testResult.innerHTML = `
             <div class="response-container">
               <p><strong>Error from Google Apps Script:</strong> ${data.error}</p>
-              <p><strong>Full response:</strong> ${JSON.stringify(data, null, 2)}</p>
+              <p><strong>Full Response:</strong> ${JSON.stringify(data, null, 2)}</p>
             </div>
-            <p>Check your Google Apps Script code and make sure your Sheets are properly shared.</p>
+            <p>Check your Google Apps Script code and make sure your sheets are properly shared.</p>
           `;
         } else {
           testResult.innerHTML = `
@@ -386,13 +384,13 @@
       }
     }
 
-    // --- BLOG FUNCTIONALITY ---
+    // --- blog functionality ---
     async function loadBlogPosts() {
       const container = document.getElementById('blog-content');
       container.innerHTML = '<p>Loading blog posts...</p>';
 
       try {
-        const response = await fetch(`${SCRIPT_URL}?action=getBlogPosts`);
+        const response = await fetch(`${script_url}?action=getBlogPosts`);
         const data = await response.json();
 
         if (data.error) throw new Error(data.error);
@@ -421,13 +419,13 @@
       }
     }
 
-    // --- COMMENT FUNCTIONALITY ---
+    // --- comment functionality ---
     async function loadComments() {
       const container = document.getElementById('comments-container');
       container.innerHTML = '<p>Loading comments...</p>';
 
       try {
-        const response = await fetch(`${SCRIPT_URL}?action=getComments`);
+        const response = await fetch(`${script_url}?action=getComments`);
         const data = await response.json();
 
         if (data.error) throw new Error(data.error);
@@ -473,7 +471,7 @@
       submitButton.disabled = true;
 
       try {
-        const response = await fetch(SCRIPT_URL, {
+        const response = await fetch(script_url, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
@@ -494,7 +492,7 @@
       }
     });
 
-    // --- RECOMMENDATIONS FUNCTIONALITY ---
+    // --- recommendations functionality ---
     document.getElementById('recommendation-form').addEventListener('submit', async function(e) {
       e.preventDefault();
 
@@ -512,7 +510,7 @@
       submitButton.disabled = true;
 
       try {
-        const response = await fetch(SCRIPT_URL, {
+        const response = await fetch(script_url, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
@@ -532,7 +530,7 @@
       }
     });
 
-    // --- INITIAL LOAD ---
+    // --- initial load ---
     // Call the function on initial page load
     document.addEventListener('DOMContentLoaded', showTabFromHash);
   </script>
