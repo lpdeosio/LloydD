@@ -423,39 +423,56 @@
     }
 
     // --- COMMENT FUNCTIONALITY ---
-    async function loadComments() {
-      const container = document.getElementById('comments-container');
-      container.innerHTML = '<p>Loading comments...</p>';
-
-      try {
-        const response = await fetch(`${SCRIPT_URL}?action=getComments`);
-        const data = await response.json();
-
-        if (data.error) throw new Error(data.error);
-
-        if (data.data.length === 0) {
-          container.innerHTML = '<p>No comments yet. Be the first to leave one!</p>';
-          return;
-        }
-
-        let html = '<h4>What others are saying:</h4>';
-        data.data.forEach(comment => {
-          html += `
-          <div style="background: #f9f9f9; padding: 1rem; margin: 1rem 0; border-radius: 5px;">
-            <strong>${comment.name}</strong> <small>(${new Date(comment.timestamp).toLocaleDateString()})</small>
-            <p>${comment.message}</p>
-          </div>
-          `;
-        });
-        container.innerHTML = html;
-      } catch (error) {
-        console.error("Error loading comments:", error);
-        container.innerHTML = `
-          <p>Could not load comments. Error: ${error.message}</p>
-          <p>Click the "Show Debug Info" button to troubleshoot connection issues.</p>
-        `;
-      }
+async function loadComments() {
+  const container = document.getElementById('comments-container');
+  container.innerHTML = '<p>Loading comments...</p>';
+  try {
+    const response = await fetch(`${SCRIPT_URL}?action=getComments`);
+    const data = await response.json();
+    if (data.error) throw new Error(data.error);
+    if (data.data.length === 0) {
+      container.innerHTML = '<p>No comments yet. Be the first to leave one!</p>';
+      return;
     }
+    
+    // Clear the container before adding new content
+    container.innerHTML = '';
+    const header = document.createElement('h4');
+    header.textContent = 'What others are saying:';
+    container.appendChild(header);
+
+    data.data.forEach(comment => {
+      // Create a new div for each comment
+      const commentDiv = document.createElement('div');
+      commentDiv.style.cssText = "background: #f9f9f9; padding: 1rem; margin: 1rem 0; border-radius: 5px;";
+      
+      // Create a strong element for the name and set its text content
+      const nameStrong = document.createElement('strong');
+      nameStrong.textContent = comment.name;
+      commentDiv.appendChild(nameStrong);
+
+      // Create a small element for the timestamp
+      const timestampSmall = document.createElement('small');
+      const date = new Date(comment.timestamp);
+      timestampSmall.textContent = ` (${date.toLocaleDateString()})`;
+      commentDiv.appendChild(timestampSmall);
+
+      // Create a p element for the message and set its text content
+      const messageP = document.createElement('p');
+      messageP.textContent = comment.message; // Use textContent to prevent XSS
+      commentDiv.appendChild(messageP);
+      
+      // Add the fully constructed comment element to the container
+      container.appendChild(commentDiv);
+    });
+  } catch (error) {
+    console.error("Error loading comments:", error);
+    container.innerHTML = `
+      <p>Could not load comments. Error: ${error.message}</p>
+      <p>Click the "Show Debug Info" button to troubleshoot connection issues.</p>
+    `;
+  }
+}
 
     document.getElementById('comment-form').addEventListener('submit', async function(e) {
       e.preventDefault();
