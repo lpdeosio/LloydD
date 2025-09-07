@@ -29,6 +29,7 @@
       margin: 0; padding: 0; color: white;
     }
     nav a { color: white; font-weight: bold; }
+    nav a.active { text-decoration: underline; }
     section { display: none; }
     section.active { display: block; }
     h1 { font-size: 2.25rem; margin-bottom: 0.5rem; color: #001219; }
@@ -251,37 +252,39 @@
       if (hash && document.getElementById(hash)) {
         tabToShow = hash;
       }
-
-      document.querySelectorAll("main section").forEach(s => {
-        s.classList.remove("active");
-      });
-
+      
+      // Deactivate all sections and nav links
+      document.querySelectorAll("main section").forEach(s => s.classList.remove("active"));
+      document.querySelectorAll("nav a").forEach(a => a.classList.remove("active"));
+      
+      // Activate the correct section and nav link
       const activeSection = document.getElementById(tabToShow);
       if (activeSection) {
         activeSection.classList.add("active");
+        document.querySelector(`nav a[data-tab="${tabToShow}"]`).classList.add("active");
       }
 
-      if (window.location.hash !== `#${tabToShow}`) {
-        history.replaceState(null, '', `#${tabToShow}`);
-      }
-
+      // Load content for the blog tab if it's the active one
       if (tabToShow === 'blog') {
         loadBlogPosts();
         loadComments();
       }
     }
 
+    // Event listeners for navigation links
     const tabs = document.querySelectorAll("nav a");
     tabs.forEach(tab => {
       tab.addEventListener("click", e => {
         e.preventDefault();
         const id = tab.dataset.tab;
+        // Update the URL hash, which will trigger the hashchange event
         window.location.hash = id;
       });
     });
 
+    // Event listener for when the URL hash changes
     window.addEventListener('hashchange', showTabFromHash);
-
+    
     // --- DEBUG FUNCTIONS ---
     function toggleDebug() {
       const debugSection = document.getElementById('debug-section');
@@ -518,6 +521,7 @@
     });
 
     // --- INITIAL LOAD ---
+    // Call the function on initial page load
     document.addEventListener('DOMContentLoaded', showTabFromHash);
   </script>
 </body>
