@@ -75,6 +75,39 @@
       max-height: 300px;
       overflow: auto;
     }
+    .review-section {
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 1px solid #eee;
+    }
+    #comment-form, #recommendation-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    #comment-form label, #recommendation-form label {
+      font-weight: bold;
+    }
+    #comment-form textarea, #comment-form input,
+    #recommendation-form textarea, #recommendation-form input {
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    #comment-form button, #recommendation-form input[type="submit"] {
+      background: #0077b6;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+      align-self: flex-start;
+      margin-top: 0.5rem;
+    }
+    #comment-form button:hover, #recommendation-form input[type="submit"]:hover {
+      background: #023e8a;
+    }
   </style>
 </head>
 <body>
@@ -88,7 +121,6 @@
 
   <div class="container">
     <header>
-      <!-- Removed banner.jpg reference since we don't have it in this environment -->
       <h1>🌍 Lloyd De Osio</h1>
       <p><strong>Remote Professional | US Healthcare Expert</strong></p>
       <p>Quezon City, Philippines | Available for international remote roles</p>
@@ -210,12 +242,52 @@
     // --- CONFIGURATION ---
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw9hKdUwCPxXhY50eYnFPEClIhS5Sc3v-oz3PqvhGCZXFqQTdJBABHcSFg-O6OPvbmx/exec';
 
+    // --- TAB SWITCHING ---
+    function showTabFromHash() {
+      const defaultTab = 'profile';
+      const hash = window.location.hash.slice(1);
+
+      let tabToShow = defaultTab;
+      if (hash && document.getElementById(hash)) {
+        tabToShow = hash;
+      }
+
+      document.querySelectorAll("main section").forEach(s => {
+        s.classList.remove("active");
+      });
+
+      const activeSection = document.getElementById(tabToShow);
+      if (activeSection) {
+        activeSection.classList.add("active");
+      }
+
+      if (window.location.hash !== `#${tabToShow}`) {
+        history.replaceState(null, '', `#${tabToShow}`);
+      }
+
+      if (tabToShow === 'blog') {
+        loadBlogPosts();
+        loadComments();
+      }
+    }
+
+    const tabs = document.querySelectorAll("nav a");
+    tabs.forEach(tab => {
+      tab.addEventListener("click", e => {
+        e.preventDefault();
+        const id = tab.dataset.tab;
+        window.location.hash = id;
+      });
+    });
+
+    window.addEventListener('hashchange', showTabFromHash);
+
     // --- DEBUG FUNCTIONS ---
     function toggleDebug() {
       const debugSection = document.getElementById('debug-section');
       const debugToggle = document.querySelector('.debug-toggle');
       
-      if (debugSection.style.display === 'none') {
+      if (debugSection.style.display === 'none' || debugSection.style.display === '') {
         debugSection.style.display = 'block';
         debugToggle.textContent = 'Hide Debug Info';
       } else {
@@ -232,7 +304,6 @@
         let response, data;
         
         if (action === 'addComment') {
-          // Test with a sample comment
           const payload = {
             action: 'addComment',
             name: 'Test User',
@@ -245,7 +316,6 @@
             body: JSON.stringify(payload)
           });
         } else {
-          // Test GET requests
           response = await fetch(`${SCRIPT_URL}?action=${action}`);
         }
         
@@ -301,24 +371,6 @@
       }
     }
 
-    // --- TAB SWITCHING ---
-    const tabs = document.querySelectorAll("nav a");
-    const sections = document.querySelectorAll("main section");
-    tabs.forEach(tab => {
-      tab.addEventListener("click", e => {
-        e.preventDefault();
-        const id = tab.dataset.tab;
-        sections.forEach(s => s.classList.remove("active"));
-        document.getElementById(id).classList.add("active");
-
-        // When switching to the Blog tab, load the content
-        if (id === 'blog') {
-          loadBlogPosts();
-          loadComments();
-        }
-      });
-    });
-
     // --- BLOG FUNCTIONALITY ---
     async function loadBlogPosts() {
       const container = document.getElementById('blog-content');
@@ -355,7 +407,6 @@
     }
 
     // --- COMMENT FUNCTIONALITY ---
-    // Load existing comments
     async function loadComments() {
       const container = document.getElementById('comments-container');
       container.innerHTML = '<p>Loading comments...</p>';
@@ -390,7 +441,6 @@
       }
     }
 
-    // Handle new comment form submission
     document.getElementById('comment-form').addEventListener('submit', async function(e) {
       e.preventDefault();
 
@@ -398,14 +448,12 @@
       const submitButton = this.querySelector('button[type="submit"]');
       const originalButtonText = submitButton.textContent;
 
-      // Create a payload object
       const payload = {
         action: 'addComment',
         name: formData.get('reviewer-name'),
         message: formData.get('comment-text')
       };
 
-      // Visual feedback
       submitButton.textContent = 'Posting...';
       submitButton.disabled = true;
 
@@ -419,7 +467,6 @@
 
         if (result.error) throw new Error(result.error);
 
-        // Success!
         alert('Thank you! Your comment has been submitted.');
         this.reset();
         loadComments();
@@ -427,7 +474,6 @@
         console.error("Error submitting comment:", error);
         alert("Sorry, there was an error posting your comment. Please try again later.");
       } finally {
-        // Reset the button state
         submitButton.textContent = originalButtonText;
         submitButton.disabled = false;
       }
@@ -472,11 +518,7 @@
     });
 
     // --- INITIAL LOAD ---
-    // Load blog posts if the blog tab is active on page load
-    if (document.getElementById('blog').classList.contains('active')) {
-      loadBlogPosts();
-      loadComments();
-    }
+    document.addEventListener('DOMContentLoaded', showTabFromHash);
   </script>
 </body>
 </html>
