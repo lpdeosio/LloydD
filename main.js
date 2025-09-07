@@ -1,5 +1,5 @@
 // --- CONFIGURATION ---
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw9hKdUwCPxXhY50eYnFPEClIhS5Sc3v-oz3PqvhGCZXFqQTdJBABHcSFg-O6OPvbmx/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbytUqTHdAYnZfXjtfKks5KWnXbXBu1JlLdzi8NRrdLpO846tRbx9WXkmesc_rIp58ji/exec';
 
 // --- TAB SWITCHING ---
 function showTabFromHash() {
